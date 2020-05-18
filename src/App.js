@@ -37,9 +37,7 @@ class App extends React.Component {
           isVisible={this.state.isVisible}
           backtoTop={this.backtoTop}
         />
-        <div className="title" ref={this.topRef}>
-          <strong>{news.title}</strong>
-        </div>
+        <Title title={news.title} ref={this.topRef} />
 
         {content &&
           content.map((para, i) => {
@@ -64,6 +62,13 @@ const Parapraph = (props) => {
     </div>
   );
 };
+const Title = React.forwardRef((props, ref) => {
+  return (
+    <div className="title" ref={ref}>
+      <strong>{props.title}</strong>
+    </div>
+  );
+});
 const BackToTopBtn = (props) => {
   return props.isVisible ? (
     <button className="scroll-to-top-btn" onClick={props.backtoTop}>
