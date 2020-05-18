@@ -4,31 +4,41 @@ import { news } from "./data";
 class App extends React.Component {
   constructor() {
     super();
-    this.refObj = {};
+    this.state = {
+      isVisible: false,
+    };
+    this.topRef = React.createRef();
   }
-  handleClick = (noEle) => {
-    this.refObj[noEle].scrollIntoView();
+  componentDidMount() {
+    const scrollComponent = this;
+    document.addEventListener("scroll", function (e) {
+      scrollComponent.toggleVisibility();
+    });
+  }
+  toggleVisibility() {
+    if (window.pageYOffset > 300) {
+      this.setState({
+        isVisible: true,
+      });
+    } else {
+      this.setState({
+        isVisible: false,
+      });
+    }
+  }
+  backtoTop = () => {
+    this.topRef.current.scrollIntoView();
   };
   render() {
     const { content } = news;
     return (
       <div className="Container">
-        <div className="title">
+        <BackToTopBtn
+          isVisible={this.state.isVisible}
+          backtoTop={this.backtoTop}
+        />
+        <div className="title" ref={this.topRef}>
           <strong>{news.title}</strong>
-        </div>
-
-        <div className="table-of-content">
-          <strong>Table of content</strong>
-          {content &&
-            content.map((para, i) => {
-              return (
-                <ClickableHeading
-                  handleClick={this.handleClick}
-                  heading={para.heading}
-                  index={i}
-                />
-              );
-            })}
         </div>
 
         {content &&
@@ -37,7 +47,6 @@ class App extends React.Component {
               <Parapraph
                 heading={para.heading}
                 detail={para.detail}
-                refObj={this.refObj}
                 index={i}
               />
             );
@@ -46,24 +55,20 @@ class App extends React.Component {
     );
   }
 }
-const ClickableHeading = (props) => {
-  const onClick = () => {
-    props.handleClick(props.index);
-  };
-  return <div onClick={onClick}>{props.heading}</div>;
-};
 const Parapraph = (props) => {
   return (
-    <div
-      className="paragraph"
-      ref={(ref) => {
-        props.refObj[props.index] = ref;
-      }}
-    >
+    <div className="paragraph">
       <strong>{props.heading}</strong>
       <br />
       {props.detail}
     </div>
   );
+};
+const BackToTopBtn = (props) => {
+  return props.isVisible ? (
+    <button className="scroll-to-top-btn" onClick={props.backtoTop}>
+      ⬆
+    </button>
+  ) : null;
 };
 export default App;
