@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Chuyện bé xé ra to 😄
+        Chuyện bé xé ra to <span role="img" aria-label="Smile">😄</span>
       </header>
     </div>
   );
