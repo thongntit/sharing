@@ -5,14 +5,9 @@ export default class Topic1 extends React.Component {
     email: "",
     password: "",
   };
-  handleChangeEmail = (event) => {
+  handleChange = (type, value) => {
     this.setState({
-      email: event.target.value,
-    });
-  };
-  handleChangePassword = (event) => {
-    this.setState({
-      password: event.target.value,
+      [type]: value,
     });
   };
   handleSubmit = (e) => {
@@ -25,17 +20,17 @@ export default class Topic1 extends React.Component {
         <div className="topic1">
           <div className="title">Topic 1: Handling Multiple Inputs</div>
           <form className="login-form" onSubmit={this.handleSubmit}>
-            <input
+            <InputWithLog
               placeholder="Email / Tên đăng nhập"
               value={this.state.email}
               type="text"
-              onChange={this.handleChangeEmail}
+              onChange={(e) => this.handleChange("email", e.target.value)}
             />
-            <input
+            <InputWithLog
               placeholder="Mật khẩu"
               value={this.state.password}
               type="password"
-              onChange={this.handleChangePassword}
+              onChange={(e) => this.handleChange("password", e.target.value)}
             />
             <button type="submit">Login</button>
           </form>
@@ -44,3 +39,9 @@ export default class Topic1 extends React.Component {
     );
   }
 }
+const InputWithLog = React.memo((props) => {
+  console.log(props.type, "is re-render")
+  return(
+    <input {...props} />
+  )
+})
