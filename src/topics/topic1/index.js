@@ -5,11 +5,12 @@ export default class Topic1 extends React.Component {
     email: "",
     password: "",
   };
-  handleChange = (type, value) => {
+  handleChange = (type, event) => {
     this.setState({
-      [type]: value,
+      [type]: event.target.value,
     });
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
     alert(JSON.stringify(this.state));
@@ -24,13 +25,13 @@ export default class Topic1 extends React.Component {
               placeholder="Email / Tên đăng nhập"
               value={this.state.email}
               type="text"
-              onChange={(e) => this.handleChange("email", e.target.value)}
+              onChange={this.handleChange.bind(null, "email")}
             />
             <InputWithLog
               placeholder="Mật khẩu"
               value={this.state.password}
               type="password"
-              onChange={(e) => this.handleChange("password", e.target.value)}
+              onChange={this.handleChange.bind(null, "password")}
             />
             <button type="submit">Login</button>
           </form>
