@@ -5,9 +5,9 @@ export default class Topic1 extends React.Component {
     email: "",
     password: "",
   };
-  handleChange = type => value => {
+  handleChange = event => {
     this.setState({
-      [type]: value.target.value
+      [event.target.name]: event.target.value
     })
   }
   handleSubmit = (e) => {
@@ -24,13 +24,15 @@ export default class Topic1 extends React.Component {
               placeholder="Email / Tên đăng nhập"
               value={this.state.email}
               type="text"
-              onChange={this.handleChange("email")}
+              name="email"
+              onChange={this.handleChange}
             />
             <InputWithLog
               placeholder="Mật khẩu"
               value={this.state.password}
               type="password"
-              onChange={this.handleChange("password")}
+              name="password"
+              onChange={this.handleChange}
             />
             <button type="submit">Login</button>
           </form>
