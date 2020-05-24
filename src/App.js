@@ -1,12 +1,15 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
-
+import Topic1 from "./topics/topic1/";
 export default function App() {
   return (
     <BrowserRouter>
       <Route exact path="/">
         <Home />
+      </Route>
+      <Route exact path="/topic1">
+        <Topic1 />
       </Route>
     </BrowserRouter>
   );
