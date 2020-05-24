@@ -5,11 +5,11 @@ export default class Topic1 extends React.Component {
     email: "",
     password: "",
   };
-  handleChange = event => {
+  handleChange = (type, value) => {
     this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
+      [type]: value,
+    });
+  };
   handleSubmit = (e) => {
     e.preventDefault();
     alert(JSON.stringify(this.state));
@@ -42,8 +42,9 @@ export default class Topic1 extends React.Component {
   }
 }
 const InputWithLog = React.memo((props) => {
-  console.log(props.type, "is re-render")
-  return(
-    <input {...props} />
-  )
-})
+  console.log(props.name, "is re-render");
+  const handlers = (event) => {
+    props.onChange(props.name, event.target.value);
+  };
+  return <input {...props} onChange={handlers} />;
+});
