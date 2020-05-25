@@ -15,7 +15,9 @@ render() {
     )
 }
 ```
+> Ưu điểm: input không bị render lại mỗi lần các components khác thay đổi
 
+> Nhược điểm: phải định nghĩa nhiều handler func nếu có nhiều input
 
 ## Inline func
 
@@ -32,6 +34,9 @@ render() {
     )
 }
 ```
+> Ưu điểm: Dễ sử dụng, nhanh và tiện lợi.
+
+> Nhược điểm: inline func sẽ bị khỏi tạo lại mỗi lần re-render khiến input phải render lại
 
 ## Bind
 
@@ -48,6 +53,7 @@ render() {
     )
 }
 ```
+Nhược điểm: Hàm bind sẽ tạo ra 1 func mới nên cũng khiến input phải render lại.
 
 ## Currying
 
@@ -64,6 +70,9 @@ render() {
     )
 }
 ```
+> Ưu điểm: Clean code
+
+>Nhược điểm: Khi func render được thực thi. Currying function sẽ trả về 1 inline func vào onChange nên vẫn bị render lại giống inline func.
 
 ## Name
 
@@ -80,3 +89,33 @@ render() {
     )
 }
 ```
+
+> Ưu điểm: input không bị render lại mỗi lần các components khác thay đổi. Handler function có thể được reuse bởi nhiều components khác nhau
+
+> Nhược điểm: Không phải thư viện nào cũng hỗ trợ prop name.
+
+## Function wrapper / HOC
+
+```javascript
+const InputWithLog = React.memo((props) => {
+  const handlers = (event) => {
+    props.onChange(props.name, event.target.value);
+  };
+  return <input {...props} onChange={handlers} />;
+});
+```
+
+```javascript
+const withHandler = (WrappedComponent) => {
+  return React.memo((props) => {
+    const handlers = (event) => {
+      props.onChange(props.name, event.target.value);
+    };
+    return <WrappedComponent {...props} onChange={handlers} />;
+  });
+} 
+```
+
+>Ưu điểm: Giải quyết được các components không hỗ trợ prop name.
+
+>Nhược điểm: Code base phức tạp
