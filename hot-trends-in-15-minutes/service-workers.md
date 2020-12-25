@@ -12,6 +12,7 @@ Service workers are a type of worker that serve the explicit purpose of being a 
 - Offline support
 - Caching
 - Push notification
+- Background sync
 
 ## Limitations
 
